@@ -7,6 +7,7 @@ st.set_page_config(
 )
 
 df = pd.read_csv("01 Spotify.csv")
+st.session_state['df_spotify'] = df
 df.set_index('Track', inplace=True)
 
 artists = df['Artist'].value_counts().index
