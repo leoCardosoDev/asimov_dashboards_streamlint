@@ -3,6 +3,12 @@ import pandas as pd
 import webbrowser
 from datetime import datetime
 
+st.set_page_config(
+    page_title="Home",
+    page_icon="🏠",
+    layout="wide"
+)
+
 if "data" not in st.session_state:
     df_data = pd.read_csv("datasets/CLEAN_FIFA23_official_data.csv", index_col=0)
     df_data = df_data[df_data["Contract Valid Until"] >= datetime.today().year]
