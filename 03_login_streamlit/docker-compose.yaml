@@ -35,6 +35,9 @@ services:
       - "5050:80"
     depends_on:
       - db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin  # Persistindo os dados do pgAdmin
 
 volumes:
   postgres_data:
+  pgadmin_data:  # Definição do volume do pgAdmin
