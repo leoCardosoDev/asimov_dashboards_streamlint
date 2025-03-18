@@ -2,14 +2,14 @@ version: "3.9"
 
 services:
   app:
-    build: ./app
+    build: .
     container_name: streamlit_app
     ports:
       - "8501:8501"
     depends_on:
       - db
     env_file:
-      - ./app/.env
+      - .env
 
   db:
     image: postgres:15
