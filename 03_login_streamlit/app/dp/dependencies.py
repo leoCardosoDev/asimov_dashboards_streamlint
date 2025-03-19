@@ -44,7 +44,7 @@ def consulta_geral():
         return request
 
 def add_registro(nome, user, senha):
-    connection = psycopg2.connect(database=DB_NAME, host=DB_NAME, user=DB_USER, password=DB_PASS, port=DB_PORT)
+    connection = psycopg2.connect(database=DB_NAME, host=DB_HOST, user=DB_USER, password=DB_PASS, port=DB_PORT)
     cursor = connection.cursor()
 
     query= f'''
@@ -65,7 +65,7 @@ def cria_tabela():
     print(DB_PASS)
     print(DB_PORT)
 
-    connection = psycopg2.connect(database=DB_NAME, host=DB_NAME, user=DB_USER, password=DB_PASS, port=DB_PORT)
+    connection = psycopg2.connect(database=DB_NAME, host=DB_HOST, user=DB_USER, password=DB_PASS, port=DB_PORT)
     cursor = connection.cursor()
     print('AAAAAAA')
     print(connection)

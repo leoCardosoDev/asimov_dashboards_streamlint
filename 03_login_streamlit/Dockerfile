@@ -5,7 +5,6 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copia os arquivos do projeto para dentro do container
-COPY requirements.txt ./
 COPY ./app /app
 
 # Instala as dependências
