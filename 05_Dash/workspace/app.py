@@ -3,24 +3,23 @@ from dash import html, dcc
 import plotly.express as px
 import pandas as pd
 
-app = dash.Dash(__name__)
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-df = pd.DataFrame({
-    "Fruit": ["Apples", "Oranges", "Bananas"],
-    "Amount": [4, 1, 2],
-    "City": ["SF", "SF", "SF"]
-})
-
-fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
-
-app.layout = html.Div(id="div1", 
-    children=[
-        html.H1("Hello Dash", id="h1"),
-        html.Div(children="Dash: A web application framework for Python", id="div2"),
-        dcc.Graph(
-            id="graph",
-            figure=fig
-        ),
+app.layout = html.Div(id="div1", children=[
+    html.H1(children='Hello Dash'),
+    html.Div(children='Dash: A web application framework for Python.'),
+    dcc.Graph(
+        id='example-graph',
+        figure=px.scatter(
+            pd.DataFrame({
+                "x": [1, 2, 3, 4],
+                "y": [10, 11, 12, 13]
+            }),
+            x="x",
+            y="y",
+        )
+    )
 ])
 
 if __name__ == '__main__':
