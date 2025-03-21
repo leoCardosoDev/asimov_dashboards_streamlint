@@ -1,9 +1,10 @@
 services:
   jupyter:
     build: .
-    container_name: jupyter-anaconda
+    container_name: jupyter-anaconda-dash
     ports:
-      - "8888:8888"
+      - "8888:8888"  # Porta do Jupyter Notebook
+      - "8050:8050"  # Porta do Dash
     volumes:
       - ./workspace:/workspace
     restart: always
