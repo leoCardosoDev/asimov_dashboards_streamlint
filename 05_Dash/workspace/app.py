@@ -1,53 +1,31 @@
-from dash import Dash, dcc, html, Input, Output
+from dash import Dash, dcc, html
+from dash.dependencies import Input, Output
+import pandas as pd
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+app = Dash(__name__)
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
-
-all_options = {
-    'America': ['New York City', 'San Francisco', 'Cincinnati'],
-    'Canada': [u'Montréal', 'Toronto', 'Ottawa']
-}
+df = pd.DataFrame({
+    'student_id' : range(1, 11),
+    'score' : [1, 5, 2, 5, 2, 3, 1, 5, 1, 5]
+})
 
 app.layout = html.Div([
-    dcc.RadioItems(
-        list(all_options.keys()),
-        'America',
-        id='countries-radio',
-    ),
-
-    html.Hr(),
-    dcc.RadioItems(id='cities-radio'),
-    html.Hr(),
-    html.Div(id='display-selected-values')
+	dcc.Dropdown(list(range(1, 6)), 1, id='score'),
+	'Foi pontuado pela seguinte quantidade de estudantes:',
+	html.Div(id='output'),
+    dcc.Store(id='store')
 ])
 
+@app.callback(Output('store', 'data'), Input('score', 'value'))
+def update_output(value):
+	filtered_df = df[df['score'] == value]
+	return filtered_df.to_dict()
 
-@app.callback(
-    Output('cities-radio', 'options'),
-    Input('countries-radio', 'value'))
-
-def set_cities_options(selected_country):
-    return [{'label': i, 'value': i} for i in all_options[selected_country]]
-
-
-@app.callback(
-    Output('cities-radio', 'value'),
-    Input('cities-radio', 'options'))
-
-def set_cities_value(available_options):
-    return available_options[0]['value']
+@app.callback(Output('output', 'children'), Input('store', 'data'))
+def update_output(data):
+	filtered_df = pd.DataFrame(data)
+	return len(filtered_df)
 
 
-@app.callback(
-    Output('display-selected-values', 'children'),
-    Input('countries-radio', 'value'),
-    Input('cities-radio', 'value'))
-
-def set_display_children(selected_country, selected_city):
-    return u'{} is a city in {}'.format(
-        selected_city, selected_country,
-    )
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8050)
